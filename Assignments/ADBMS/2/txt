@@ -1,0 +1,86 @@
+CREATE DATABASE ASS_2;
+USE ASS_2;
+
+CREATE TABLE EMPLOYEE(
+    Emp_no int,
+    E_name varchar(50),
+    E_address varchar(100),
+    E_ph_no int,
+    Dept_no int,
+    Dept_name varchar(50),
+    Job_id int,
+    Designation varchar(50),
+    Salary float,
+    Joining_date date
+);
+
+INSERT INTO EMPLOYEE VALUES 
+(101, 'SMITH', 'Pune', 111111, 10, 'IT', 1, 'CLERK', 8000, '1980-01-19'),
+(102, 'SCOTT', 'Mumbai', 222222, 20, 'SALES', 2, 'ANALYST', 15000, '1981-05-01'),
+(103, 'ALLEN', 'Delhi', 333333, 10, 'IT', 3, 'MANAGER', 25000, '1981-12-03'),
+(104, 'HARRY', 'Pune', 444444, 30, 'HR', 4, 'CLERK', 9000, '1982-06-15'),
+(105, 'KING', 'Bangalore', 555555, 20, 'FINANCE', 5, 'PRESIDENT', 50000, '1981-12-17'),
+(106, 'HARISH', 'Chennai', 666666, 10, 'IT', 6, 'ANALYST', 12000, '1983-04-10');
+
+SELECT Emp_no, E_name, Salary
+FROM EMPLOYEE
+WHERE Designation like 'MANAGER';
+
+SELECT *
+FROM EMPLOYEE
+WHERE Salary > 10000;
+
+SELECT *
+FROM EMPLOYEE
+WHERE EXTRACT(YEAR FROM Joining_date) > 1981
+ORDER BY Designation;
+
+SELECT 
+E_name, 
+TIMESTAMPDIFF(YEAR, Joining_date, CURDATE()) AS Experience, 
+Salary / 30
+FROM EMPLOYEE;
+
+SELECT * 
+FROM EMPLOYEE
+WHERE Designation IN ('CLERK', 'ANALYST');
+
+SELECT *
+FROM EMPLOYEE
+WHERE Joining_date IN ('1981-05-01', '1981-12-03', '1981-12-17', '1980-01-19');
+
+SELECT * 
+FROM EMPLOYEE 
+WHERE Dept_no = 10
+OR Dept_no = 20;
+
+SELECT E_name
+FROM EMPLOYEE
+WHERE E_name like 'S%';
+
+SELECT MAX(Salary)
+FROM EMPLOYEE;
+
+SELECT E_name, SUBSTRING(E_name, 1, 5)
+FROM EMPLOYEE
+WHERE E_name like 'H____%'
+AND Designation NOT IN ('MGR', 'PRESIDENT')
+ORDER BY Salary;
+
+SELECT MAX(Salary) AS MAX_SALARY,
+MIN(Salary) AS MIN_SALARY,
+MAX(TIMESTAMPDIFF(YEAR, Joining_date, CURDATE())) AS MAX_EXPERIANCE,
+MIN(TIMESTAMPDIFF(YEAR, Joining_date, CURDATE())) AS MIN_EXPERIANCE
+FROM EMPLOYEE;
+
+SELECT SUM(Salary)
+FROM EMPLOYEE;
+
+SELECT AVG(Salary)
+FROM EMPLOYEE
+WHERE Dept_name = 'IT';
+
+SELECT DISTINCT Salary
+FROM EMPLOYEE;
+
+DROP DATABASE ASS_2;
